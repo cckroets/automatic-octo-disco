@@ -19,12 +19,20 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,7 +71,8 @@ fun MyApp(timerViewModel: TimerViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Row(horizontalArrangement = Arrangement.Center,
+            Row(
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TimeUnitPicker(
@@ -72,17 +81,22 @@ fun MyApp(timerViewModel: TimerViewModel) {
                     onDecrease = { timerViewModel.minusSeconds(60) }
                 )
 
-                TimeUnitPicker(value = secondsRemaining % 60,
+                TimeUnitPicker(
+                    value = secondsRemaining % 60,
                     onIncrease = { timerViewModel.addSeconds(1) },
                     onDecrease = { timerViewModel.minusSeconds(1) }
                 )
             }
 
-            Row(horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth().padding(24.dp)) {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth().padding(24.dp)
+            ) {
                 Button(onClick = { timerViewModel.toggleTimer() }) {
-                    Text(text = (if (isPlaying) "Pause" else "Start"),
-                    Modifier.padding(horizontal = 24.dp))
+                    Text(
+                        text = (if (isPlaying) "Pause" else "Start"),
+                        Modifier.padding(horizontal = 24.dp)
+                    )
                 }
             }
         }
@@ -95,15 +109,19 @@ fun TimeUnitPicker(
     onIncrease: () -> Unit,
     onDecrease: () -> Unit
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.wrapContentWidth().defaultMinSize(100.dp)) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.wrapContentWidth().defaultMinSize(100.dp)
+    ) {
         Button(onClick = onIncrease) {
             Text(text = "+")
         }
 
-        Text(modifier = Modifier.padding(24.dp),
+        Text(
+            modifier = Modifier.padding(24.dp),
             style = typography.h4,
-            text = value.toString().padStart(2, '0'))
+            text = value.toString().padStart(2, '0')
+        )
 
         Button(onClick = onDecrease) {
             Text(text = "-")
